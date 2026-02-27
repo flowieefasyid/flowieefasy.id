@@ -1,0 +1,385 @@
+import React, { useState } from 'react';
+import { Ticket, ShieldCheck, Clock, CreditCard, ChevronDown, ChevronUp, CheckCircle2, Instagram, MessageCircle } from 'lucide-react';
+
+// --- Komponen Accordion untuk Terms & Conditions ---
+const AccordionItem = ({ title, children, isOpen, onClick }) => {
+  return (
+    <div className="border border-rose-100 rounded-xl mb-3 overflow-hidden bg-white shadow-sm transition-all duration-300">
+      <button
+        className="w-full px-6 py-4 text-left flex justify-between items-center focus:outline-none hover:bg-rose-50/50 transition-colors"
+        onClick={onClick}
+      >
+        <h4 className="font-semibold text-slate-800">{title}</h4>
+        {isOpen ? (
+          <ChevronUp className="w-5 h-5 text-rose-400 flex-shrink-0" />
+        ) : (
+          <ChevronDown className="w-5 h-5 text-rose-400 flex-shrink-0" />
+        )}
+      </button>
+      <div
+        className={`transition-all duration-300 ease-in-out ${
+          isOpen ? 'max-h-[1000px] opacity-100' : 'max-h-0 opacity-0'
+        } overflow-hidden`}
+      >
+        <div className="px-6 pb-5 text-slate-600 text-sm leading-relaxed border-t border-rose-50">
+          {children}
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default function App() {
+  const [openIndex, setOpenIndex] = useState(null);
+
+  const toggleAccordion = (index) => {
+    setOpenIndex(openIndex === index ? null : index);
+  };
+
+  // --- Data Terms & Conditions ---
+  const termsData = [
+    {
+      title: "1. Data Pembelian",
+      content: (
+        <div className="space-y-2">
+          <p>Proses pembelian tiket dapat menggunakan:</p>
+          <ul className="list-disc pl-5 space-y-1">
+            <li>Data pribadi customer, atau</li>
+            <li>Data tim flowieefasy.id untuk membantu mempercepat proses war dan meningkatkan peluang secured ticket.</li>
+          </ul>
+          <p className="text-rose-600 font-medium mt-2">Catatan:</p>
+          <p>Penggunaan data tim serta layanan penukaran tiket fisik hanya tersedia untuk konser wilayah Jabodetabek.</p>
+          <p>Customer wajib memastikan seluruh data yang diberikan valid dan aktif. Kesalahan data di luar tanggung jawab tim.</p>
+        </div>
+      )
+    },
+    {
+      title: "2. Metode Pembayaran",
+      content: (
+        <div className="space-y-3">
+          <p>Pembayaran DP maupun pelunasan dapat dilakukan melalui:</p>
+          <div className="bg-slate-50 p-3 rounded-lg space-y-2 border border-slate-100">
+            <p className="flex items-center gap-2"><CreditCard className="w-4 h-4 text-rose-400"/> <strong>Bank Mandiri:</strong> 1660005587001 (a.n LUTFIAH SALWA ASSYAF)</p>
+            <p className="flex items-center gap-2"><CreditCard className="w-4 h-4 text-rose-400"/> <strong>Seabank:</strong> 901569422715 (a.n Nasywa Kirani)</p>
+            <p className="flex items-center gap-2"><CreditCard className="w-4 h-4 text-rose-400"/> <strong>QRIS:</strong> Jasa War Tiket @flowieefasy.id</p>
+          </div>
+          <p>Atau metode lain yang diinformasikan resmi oleh tim di grup.</p>
+          <p className="font-medium text-rose-600">flowieefasy.id tidak menyediakan sistem talangan atau cicilan.</p>
+        </div>
+      )
+    },
+    {
+      title: "3. Sistem Pembayaran Tiket",
+      content: (
+        <div className="space-y-3">
+          <p>Tersedia dua cara:</p>
+          <ul className="space-y-3">
+            <li>
+              <strong>• Self Payment</strong><br/>
+              Customer melakukan pembayaran langsung ke website resmi ticketing menggunakan metode pembayaran pribadi (VA / e-wallet / kartu).
+            </li>
+            <li>
+              <strong>• Full Payment via Tim</strong><br/>
+              Bagi customer yang tidak dapat standby saat war berlangsung, pembayaran tiket dapat dititipkan kepada tim dengan syarat sudah melakukan pelunasan harga tiket sebelumnya.
+            </li>
+          </ul>
+        </div>
+      )
+    },
+    {
+      title: "4. Booking Slot & DP",
+      content: (
+        <div className="space-y-2">
+          <p>Untuk mengamankan slot war, customer wajib membayar:</p>
+          <div className="bg-rose-50 text-rose-700 font-semibold p-3 rounded-lg inline-block my-2">
+            DP Booking Slot sebesar Rp20.000 / tiket
+          </div>
+          <ul className="list-disc pl-5 space-y-1">
+            <li>Pembayaran DP dilakukan langsung melalui form pendaftaran.</li>
+            <li>Setelah pembayaran, customer wajib konfirmasi ke WhatsApp untuk verifikasi dan di-invite ke grup war.</li>
+            <li>DP akan dikembalikan 100% apabila tiket tidak berhasil diperoleh karena sold out resmi dari promotor.</li>
+          </ul>
+        </div>
+      )
+    },
+    {
+      title: "5. Batas Pemesanan",
+      content: (
+        <ul className="list-disc pl-5 space-y-2">
+          <li>Maksimal pemesanan 2–4 tiket (menyesuaikan kebijakan event).</li>
+          <li>Semua tiket dalam satu booking harus berada di section/kategori yang sama.</li>
+          <li>Pada event tertentu dapat dibatasi maksimal 3 tiket.</li>
+        </ul>
+      )
+    },
+    {
+      title: "6. Fee Pelunasan Jasa",
+      content: (
+        <div className="space-y-3">
+          <p>Fee pelunasan dibayarkan setelah tiket berhasil <strong>secured</strong>.</p>
+          <p>Fee ini merupakan bentuk apresiasi dan pembayaran atas:</p>
+          <ul className="list-disc pl-5 space-y-1">
+            <li>Waktu standby tim</li>
+            <li>Strategi multi device</li>
+            <li>Tenaga dan koordinasi saat proses war berlangsung</li>
+          </ul>
+          <p className="text-sm italic mt-2">Apabila terjadi kelalaian dari pihak customer saat proses pembayaran (tidak aktif / tidak menyelesaikan transaksi tepat waktu), maka pelunasan tetap berlaku karena tim telah menjalankan proses war sesuai permintaan dan berhasil mengamankan tiket.</p>
+          
+          <div className="mt-4 bg-slate-50 p-4 rounded-lg border border-slate-100">
+            <h5 className="font-semibold text-slate-800 mb-2">Ketentuan Jika Customer Mendapat Tiket Sendiri:</h5>
+            <ul className="list-disc pl-5 space-y-2 text-sm">
+              <li>Jika customer berhasil secured terlebih dahulu dan tim belum mendapatkan tiket → tidak perlu pelunasan, <strong>DP hangus</strong>.</li>
+              <li>Jika tim dan customer sama-sama berhasil mendapatkan tiket → tidak perlu pelunasan, namun <strong>DP tetap hangus</strong>.</li>
+              <li>DP hanya dikembalikan apabila tiket resmi dinyatakan sold out oleh promotor dan tim tidak berhasil mendapatkan tiket.</li>
+            </ul>
+          </div>
+        </div>
+      )
+    },
+    {
+      title: "7. Kebijakan Pembatalan",
+      content: (
+        <ul className="list-disc pl-5 space-y-2">
+          <li>Pembatalan maximal <strong>H-3</strong> sebelum hari war → DP dikembalikan penuh.</li>
+          <li>Pembatalan <strong>H-1</strong> sebelum war → DP hangus.</li>
+          <li><strong>Tidak menerima pembatalan</strong> saat proses ticketing sedang berlangsung.</li>
+        </ul>
+      )
+    },
+    {
+      title: "8. Refund Policy",
+      content: (
+        <div className="space-y-3">
+          <p>Jika tim tidak berhasil mendapatkan tiket hingga status resmi sold out oleh promotor:</p>
+          <ul className="list-disc pl-5 space-y-1">
+            <li>Seluruh dana akan dikembalikan 100%</li>
+            <li>Tanpa potongan apapun (kecuali biaya admin transfer bank jika ada)</li>
+            <li>Proses refund maksimal 1x24 jam setelah konfirmasi gagal secured</li>
+          </ul>
+          <div className="bg-red-50 text-red-700 p-3 rounded-lg mt-2 text-sm">
+            Apabila event atau konser dibatalkan oleh pihak promotor, maka <strong>FEE JASA TIDAK DAPAT DIKEMBALIKAN</strong> karena jasa war telah dijalankan sesuai permintaan customer.
+          </div>
+        </div>
+      )
+    },
+    {
+      title: "9. Tidak Ada Jaminan 100%",
+      content: (
+        <div className="space-y-2">
+          <p>flowieefasy.id <strong>tidak menjamin keberhasilan 100%</strong> mendapatkan tiket karena proses war bergantung pada traffic sistem dan kebijakan platform ticketing.</p>
+          <p>Namun tim akan berusaha semaksimal mungkin hingga penjualan resmi dinyatakan sold out.</p>
+        </div>
+      )
+    },
+    {
+      title: "10. Penukaran Tiket Fisik",
+      content: (
+        <div className="space-y-3">
+          <p>Jika menggunakan data tim, maka penukaran tiket fisik akan dilakukan oleh tim hingga tiket menjadi fisik dan berada di tangan customer.</p>
+          <p className="text-sm font-medium text-purple-600 bg-purple-50 inline-block px-3 py-1 rounded-full">Layanan ini hanya berlaku untuk konser wilayah Jabodetabek.</p>
+          <p>Dikenakan biaya tambahan:<br/><strong className="text-rose-600">Rp50.000 / tiket</strong> (jasa penukaran tiket fisik)</p>
+          <p>Tiket fisik dapat diserahkan melalui:</p>
+          <ul className="list-disc pl-5 space-y-1">
+            <li>Pengambilan langsung di venue (by appointment), atau</li>
+            <li>Di lokasi penukaran tiket pada hari H</li>
+          </ul>
+          <p className="italic">Customer tidak perlu antre karena proses penukaran akan di-handle oleh tim.</p>
+        </div>
+      )
+    },
+    {
+      title: "11. Perubahan Section",
+      content: (
+        <div className="space-y-2">
+          <p>Pergantian section hanya dapat dilakukan maksimal <strong>H-3</strong> sebelum hari war.</p>
+          <p>Setelah melewati batas tersebut, perubahan tidak dapat dilakukan.</p>
+        </div>
+      )
+    }
+  ];
+
+  return (
+    <div className="min-h-screen bg-[#FAFAFA] font-sans text-slate-800 selection:bg-rose-200 selection:text-rose-900" style={{ fontFamily: "'Poppins', sans-serif" }}>
+      {/* Inline styles for Google Fonts to ensure rendering in standard environments */}
+      <style dangerouslySetInnerHTML={{__html: `
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+      `}} />
+
+      {/* --- Navbar --- */}
+      <nav className="fixed w-full z-50 bg-white/80 backdrop-blur-md border-b border-rose-100 transition-all duration-300">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex justify-between items-center h-16">
+            <div className="flex-shrink-0 flex items-center gap-2">
+              <Ticket className="h-6 w-6 text-rose-400" />
+              <span className="font-bold text-xl tracking-tight text-slate-800">
+                flowie<span className="text-rose-400">efasy</span>.id
+              </span>
+            </div>
+            <div className="hidden md:flex space-x-8">
+              <a href="#home" className="text-slate-600 hover:text-rose-500 font-medium transition-colors">Home</a>
+              <a href="#about" className="text-slate-600 hover:text-rose-500 font-medium transition-colors">Services</a>
+              <a href="#terms" className="text-slate-600 hover:text-rose-500 font-medium transition-colors">T&C</a>
+            </div>
+            <div>
+              <a href="#booking" className="bg-rose-400 hover:bg-rose-500 text-white px-5 py-2 rounded-full font-medium transition-all shadow-sm hover:shadow-md">
+                Book Slot
+              </a>
+            </div>
+          </div>
+        </div>
+      </nav>
+
+      {/* --- Hero Section --- */}
+      <section id="home" className="relative pt-32 pb-20 lg:pt-40 lg:pb-28 overflow-hidden">
+        {/* Soft Background Elements */}
+        <div className="absolute top-0 left-0 w-full h-full overflow-hidden -z-10">
+          <div className="absolute top-[-10%] left-[-10%] w-[50%] h-[50%] rounded-full bg-rose-100/50 blur-3xl"></div>
+          <div className="absolute bottom-[-10%] right-[-10%] w-[50%] h-[50%] rounded-full bg-purple-100/50 blur-3xl"></div>
+        </div>
+
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <span className="inline-block py-1 px-3 rounded-full bg-rose-50 border border-rose-100 text-rose-500 text-sm font-semibold mb-6">
+            ✨ Your Trusted War Ticketing Service
+          </span>
+          <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-slate-800 mb-6 leading-tight">
+            Amankan Tiket Konser Impianmu <br className="hidden md:block"/>
+            Bersama <span className="text-transparent bg-clip-text bg-gradient-to-r from-rose-400 to-purple-400">flowieefasy.id</span>
+          </h1>
+          <p className="mt-4 text-lg text-slate-600 max-w-2xl mx-auto mb-10">
+            Fokus persiapkan outfit konser kamu, biarkan tim profesional kami yang berjuang mengamankan tiketnya. Cepat, aman, dan transparan.
+          </p>
+          <div className="flex flex-col sm:flex-row justify-center gap-4">
+            <a href="#booking" className="bg-slate-800 hover:bg-slate-900 text-white px-8 py-3.5 rounded-full font-medium text-lg transition-all shadow-lg hover:shadow-xl flex items-center justify-center gap-2">
+              <Ticket className="w-5 h-5" /> Booking Slot Sekarang
+            </a>
+            <a href="#terms" className="bg-white hover:bg-rose-50 text-slate-700 border border-rose-100 px-8 py-3.5 rounded-full font-medium text-lg transition-all flex items-center justify-center gap-2">
+              Baca Ketentuan
+            </a>
+          </div>
+        </div>
+      </section>
+
+      {/* --- Why Choose Us Section --- */}
+      <section id="about" className="py-20 bg-white">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-16">
+            <h2 className="text-3xl font-bold text-slate-800 mb-4">Mengapa Memilih Kami?</h2>
+            <div className="w-20 h-1 bg-rose-200 mx-auto rounded-full"></div>
+          </div>
+          <div className="grid md:grid-cols-3 gap-8">
+            <div className="p-8 rounded-2xl bg-[#FAFAFA] border border-slate-100 hover:border-rose-200 transition-colors text-center group">
+              <div className="w-16 h-16 bg-rose-100 rounded-full flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform">
+                <ShieldCheck className="w-8 h-8 text-rose-500" />
+              </div>
+              <h3 className="text-xl font-bold mb-3 text-slate-800">Trusted & Secure</h3>
+              <p className="text-slate-600 text-sm leading-relaxed">
+                Kami menangani data Anda secara serius dan profesional. Sistem refund jelas dan transparan jika tiket gagal didapatkan.
+              </p>
+            </div>
+            <div className="p-8 rounded-2xl bg-[#FAFAFA] border border-slate-100 hover:border-purple-200 transition-colors text-center group">
+              <div className="w-16 h-16 bg-purple-100 rounded-full flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform">
+                <Clock className="w-8 h-8 text-purple-500" />
+              </div>
+              <h3 className="text-xl font-bold mb-3 text-slate-800">Fast & Responsive</h3>
+              <p className="text-slate-600 text-sm leading-relaxed">
+                Tim standby dengan strategi multi-device. Update berkala di grup WhatsApp agar Anda tidak perlu cemas menunggu hasil.
+              </p>
+            </div>
+            <div className="p-8 rounded-2xl bg-[#FAFAFA] border border-slate-100 hover:border-rose-200 transition-colors text-center group">
+              <div className="w-16 h-16 bg-rose-100 rounded-full flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform">
+                <CheckCircle2 className="w-8 h-8 text-rose-500" />
+              </div>
+              <h3 className="text-xl font-bold mb-3 text-slate-800">All-in-One Service</h3>
+              <p className="text-slate-600 text-sm leading-relaxed">
+                Mulai dari war tiket, pembayaran mandiri/titip, hingga layanan penukaran tiket fisik untuk area Jabodetabek.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* --- Terms & Conditions Section --- */}
+      <section id="terms" className="py-20 bg-[#FAFAFA]">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl font-bold text-slate-800 mb-4">Terms & Conditions</h2>
+            <p className="text-slate-600">Harap membaca seluruh ketentuan di bawah ini sebelum melakukan booking slot.</p>
+            <div className="w-20 h-1 bg-rose-200 mx-auto rounded-full mt-6"></div>
+          </div>
+
+          <div className="bg-white p-6 md:p-10 rounded-3xl shadow-sm border border-rose-50">
+            {termsData.map((term, index) => (
+              <AccordionItem
+                key={index}
+                title={term.title}
+                isOpen={openIndex === index}
+                onClick={() => toggleAccordion(index)}
+              >
+                {term.content}
+              </AccordionItem>
+            ))}
+
+            <div className="mt-8 p-5 bg-rose-50/50 rounded-xl border border-rose-100 text-center">
+              <p className="text-sm text-slate-700">
+                Dengan melakukan booking slot di <strong>flowieefasy.id</strong>, customer dianggap telah <strong>membaca, memahami, dan menyetujui</strong> seluruh ketentuan yang berlaku. <br/><br/>
+                <span className="text-xs text-slate-500">@flowieefasy.id berhak memperbarui Terms & Conditions sewaktu-waktu tanpa pemberitahuan terlebih dahulu.</span>
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* --- Booking / Call to Action --- */}
+      <section id="booking" className="py-20 bg-white relative overflow-hidden">
+        {/* Decoration */}
+        <div className="absolute right-0 top-0 w-64 h-64 bg-rose-50 rounded-bl-full -z-10"></div>
+        
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <h2 className="text-3xl font-bold text-slate-800 mb-6">Siap Mengamankan Tiketmu?</h2>
+          <p className="text-slate-600 mb-10 max-w-xl mx-auto">
+            Jangan sampai kehabisan slot. Hubungi admin kami sekarang untuk konfirmasi ketersediaan slot dan pembayaran DP.
+          </p>
+
+          <div className="flex flex-col sm:flex-row justify-center gap-5">
+            <a 
+              href="https://wa.me/1234567890" // Ganti dengan nomor WA asli
+              target="_blank"
+              rel="noopener noreferrer"
+              className="bg-green-500 hover:bg-green-600 text-white px-8 py-4 rounded-xl font-semibold transition-all shadow-md hover:shadow-lg flex items-center justify-center gap-3 text-lg"
+            >
+              <MessageCircle className="w-6 h-6" />
+              Chat Admin (WhatsApp)
+            </a>
+            <a 
+              href="https://instagram.com/flowieefasy.id" // Ganti dengan link IG asli
+              target="_blank"
+              rel="noopener noreferrer"
+              className="bg-gradient-to-tr from-yellow-400 via-rose-500 to-purple-600 hover:opacity-90 text-white px-8 py-4 rounded-xl font-semibold transition-all shadow-md hover:shadow-lg flex items-center justify-center gap-3 text-lg"
+            >
+              <Instagram className="w-6 h-6" />
+              Follow Instagram
+            </a>
+          </div>
+        </div>
+      </section>
+
+      {/* --- Footer --- */}
+      <footer className="bg-slate-900 text-slate-300 py-12">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex flex-col md:flex-row justify-between items-center gap-6">
+            <div className="flex items-center gap-2">
+              <Ticket className="h-6 w-6 text-rose-400" />
+              <span className="font-bold text-xl tracking-tight text-white">
+                flowie<span className="text-rose-400">efasy</span>.id
+              </span>
+            </div>
+            <div className="text-sm text-slate-400">
+              &copy; {new Date().getFullYear()} flowieefasy.id. All rights reserved. <br className="md:hidden"/>
+              Professional War Ticketing Service.
+            </div>
+          </div>
+        </div>
+      </footer>
+    </div>
+  );
+}
